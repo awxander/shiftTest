@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-data class BinInfo(
+data class BinInfoModel(
     @SerializedName("scheme") var scheme: String? = null,
     @SerializedName("type") var type: String? = null,
     @SerializedName("brand") var brand: String? = null,
