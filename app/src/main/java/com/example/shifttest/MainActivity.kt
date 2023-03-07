@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shifttest.adapter.BinAdapter
 import com.example.shifttest.data.BinInfo
 import com.example.shifttest.data.BinRepository
 import com.example.shifttest.databinding.ActivityMainBinding
@@ -15,12 +17,19 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val repository = BinRepository()
+    private val adapter = BinAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setRecyclerView()
         setBtnListener()
         turnOffNightMode()
+    }
+
+    private fun setRecyclerView(){
+        binding.mainRecyclerView.adapter = adapter
+        binding.mainRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
     }
 
     private fun turnOffNightMode(){
@@ -33,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             lateinit var binInfo: BinInfo
             lifecycleScope.launch {
                 binInfo = repository.getByNum(binNum)
+                adapter.addItem(binInfo)
                 startInfoActivity(binInfo)
             }
         }
