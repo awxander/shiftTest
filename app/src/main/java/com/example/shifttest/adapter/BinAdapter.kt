@@ -1,10 +1,12 @@
 package com.example.shifttest.adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shifttest.data.BinInfo
+import com.example.shifttest.R
 import com.example.shifttest.databinding.BinItemBinding
+import com.example.shifttest.domain.BinInfo
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -20,7 +22,7 @@ class BinAdapter : RecyclerView.Adapter<BinAdapter.BinHolder>() {
 
         fun bind(binInfo: BinInfo){
             itemBinding.apply {
-                tvBinNum
+                tvBinNum.text = binInfo.binNum.toString()
                 tvTime.text = getDateAndTime()
             }
         }
@@ -34,7 +36,9 @@ class BinAdapter : RecyclerView.Adapter<BinAdapter.BinHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BinHolder {
-        TODO("Not yet implemented")
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.bin_item, parent, false)
+        return BinHolder(view)
     }
 
     override fun getItemCount(): Int = bins.size
