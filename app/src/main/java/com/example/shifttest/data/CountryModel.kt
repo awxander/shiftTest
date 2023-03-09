@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Country(
+data class CountryModel(
     @SerializedName("numeric"   ) var numeric   : String? = null,
     @SerializedName("alpha2"    ) var alpha2    : String? = null,
     @SerializedName("name"      ) var name      : String? = null,

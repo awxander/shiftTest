@@ -1,14 +1,12 @@
-package com.example.shifttest.presentation
+package com.example.shifttest
 
 import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shifttest.BIN_INFO
-import com.example.shifttest.data.BinInfo
 import com.example.shifttest.databinding.ActivityInfoBinding
+import com.example.shifttest.domain.BinInfo
 
 class InfoActivity : AppCompatActivity() {
 
@@ -31,13 +29,13 @@ class InfoActivity : AppCompatActivity() {
 
     private fun setInfo(binInfo: BinInfo) {
         binding.apply {
-            scheme.text = "scheme: " + ifNotMentioned(binInfo.scheme)
+            scheme.text = "scheme: ".plus(ifNotMentioned(binInfo.scheme))
             type.text = "type: " + ifNotMentioned(binInfo.type)
             brand.text = "brand: " + ifNotMentioned(binInfo.brand)
             prepaid.text = "prepaid: " + ifNotMentioned(binInfo.prepaid.toString())
-            bank.text = "bank: " + ifNotMentioned(binInfo.bank?.name)
+            bank.text = "bank: " + ifNotMentioned(binInfo.bankModel?.name)
             number.text = "card number: " + ifNotMentioned(binInfo.cardNumber?.length.toString())
-            country.text = "country: " + ifNotMentioned(binInfo.country?.name)
+            country.text = "country: " + ifNotMentioned(binInfo.countryModel?.name)
         }
     }
 
