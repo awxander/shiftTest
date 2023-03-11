@@ -6,12 +6,12 @@ import com.example.shifttest.TAG
 import com.example.shifttest.data.BinRepository
 import kotlinx.coroutines.launch
 
-class BinSearchViewModel(private val repository : BinRepository) : ViewModel() {
+class BinSearchViewModel(private val repository: BinRepository) : ViewModel() {
     private val _state: MutableLiveData<SearchState> = MutableLiveData(SearchState.Initial)
 
     val state: LiveData<SearchState> = _state
 
-    fun loadData(binNum: Long){
+    fun loadData(binNum: Long) {
         viewModelScope.launch() {
             try {
                 val binInfoModel = repository.getByNum(binNum)
@@ -21,6 +21,7 @@ class BinSearchViewModel(private val repository : BinRepository) : ViewModel() {
                 Log.e(TAG, e.message.orEmpty())
                 _state.value = SearchState.Error(e.message.orEmpty())
             }
+            _state.value = SearchState.Initial
         }
     }
 }

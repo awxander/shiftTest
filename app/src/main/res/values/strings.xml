@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">shiftTest</string>
+    <string name="bin">BIN: </string>
+    <string name="error">error </string>
 </resources>

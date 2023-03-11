@@ -35,6 +35,6 @@ class BinRepository {
             .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build()
 
-    suspend fun getByNum(binNum : Int): BinInfo =
+    suspend fun getByNum(binNum : Long): BinInfoModel =
         binApi.getByNum(binNum)
 }

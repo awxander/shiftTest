@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-data class CardNumber(
+data class CardNumberModel(
     @SerializedName("length" ) var length : Int?     = null,
     @SerializedName("luhn"   ) var luhn   : Boolean? = null
 ) : Parcelable
