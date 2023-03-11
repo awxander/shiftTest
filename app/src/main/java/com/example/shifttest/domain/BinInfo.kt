@@ -12,8 +12,8 @@ data class BinInfo(
     var brand: String? = null,
     var prepaid: Boolean? = null,
     var bankModel: BankModel? = null,
-//    var cardNumber: CardNumberModel? = null,
-//    var countryModel: CountryModel? = null,
+    var cardNumber: CardNumberModel? = null,
+    var countryModel: CountryModel? = null,
 ) : Parcelable
 {
     constructor(
@@ -26,7 +26,7 @@ data class BinInfo(
         binInfoModel.brand,
         binInfoModel.prepaid,
         binInfoModel.bankModel,
-//        binInfoModel.cardNumber,
-//        binInfoModel.countryModel,
+        binInfoModel.cardNumber,
+        binInfoModel.countryModel,
     )
 }

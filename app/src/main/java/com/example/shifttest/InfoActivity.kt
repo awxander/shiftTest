@@ -33,9 +33,9 @@ class InfoActivity : AppCompatActivity() {
             type.text = "type: " + ifNotMentioned(binInfo.type)
             brand.text = "brand: " + ifNotMentioned(binInfo.brand)
             prepaid.text = "prepaid: " + ifNotMentioned(binInfo.prepaid.toString())
-//            bank.text = "bank: " + ifNotMentioned(binInfo.bankModel?.name)
-//            number.text = "card number len: " + ifNotMentioned(binInfo.cardNumber?.length.toString())
-//            country.text = "country: " + ifNotMentioned(binInfo.countryModel?.name)
+            bank.text = "bank: " + ifNotMentioned(binInfo.bankModel?.name)
+            number.text = "card number len: " + ifNotMentioned(binInfo.cardNumber?.length.toString())
+            country.text = "country: " + ifNotMentioned(binInfo.countryModel?.name)
         }
     }
 

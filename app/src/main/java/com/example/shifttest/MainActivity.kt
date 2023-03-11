@@ -10,13 +10,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.example.shifttest.adapter.BinAdapter
 import com.example.shifttest.data.BinInfoModel
 import com.example.shifttest.data.BinRepository
 import com.example.shifttest.databinding.ActivityMainBinding
 import com.example.shifttest.db.BinItem
-import com.example.shifttest.db.BinItemDatabase
 import com.example.shifttest.domain.BinInfo
 import com.example.shifttest.presentation.BinSearchViewModel
 import com.example.shifttest.presentation.SearchState
@@ -33,13 +31,6 @@ class MainActivity : AppCompatActivity() {
     private var lastBinNum: Long = 0
     private val binItemsList = ArrayList<BinItem>()
 
-    private val database by lazy {
-        Room.databaseBuilder(
-            this,
-            BinItemDatabase::class.java,
-            "bin_database"
-        ).build()
-    }
 
     private val viewModel: BinSearchViewModel by viewModels {
         viewModelFactory {
@@ -108,7 +99,6 @@ class MainActivity : AppCompatActivity() {
             )
             adapter.addItem(binItem)
             binItemsList.add(binItem)
-//            database.myItemDao().insertItems(binItem)
         }
     }
 
