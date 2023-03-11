@@ -9,6 +9,6 @@ data class BinInfoModel(
     @SerializedName("brand") var brand: String? = null,
     @SerializedName("prepaid") var prepaid: Boolean? = null,
     @SerializedName("bank") var bankModel: BankModel? = null,
-    @SerializedName("number") var cardNumber: CardNumberModel? = null,
-    @SerializedName("country") var countryModel: CountryModel? = null,
+//    @SerializedName("number") var cardNumber: CardNumberModel? = null,
+//    @SerializedName("country") var countryModel: CountryModel? = null,
 )

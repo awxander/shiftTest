@@ -22,6 +22,7 @@ import com.example.shifttest.presentation.BinSearchViewModel
 import com.example.shifttest.presentation.SearchState
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,12 +31,13 @@ class MainActivity : AppCompatActivity() {
     private val adapter = BinAdapter()
     private var isUserRequest = false
     private var lastBinNum: Long = 0
+    private val binItemsList = ArrayList<BinItem>()
 
-    val database by lazy {
+    private val database by lazy {
         Room.databaseBuilder(
             this,
             BinItemDatabase::class.java,
-            "my_database"
+            "bin_database"
         ).build()
     }
 
@@ -105,7 +107,8 @@ class MainActivity : AppCompatActivity() {
                 searchDate = getDateAndTime()
             )
             adapter.addItem(binItem)
-            database.myItemDao().insertItems(binItem)
+            binItemsList.add(binItem)
+//            database.myItemDao().insertItems(binItem)
         }
     }
 

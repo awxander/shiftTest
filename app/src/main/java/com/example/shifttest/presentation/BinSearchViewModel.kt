@@ -16,12 +16,11 @@ class BinSearchViewModel(private val repository: BinRepository) : ViewModel() {
             try {
                 val binInfoModel = repository.getByNum(binNum)
                 Log.i(javaClass.simpleName, "got bin info")
-                _state.value = SearchState.Content(binInfoModel)
+                _state.postValue(SearchState.Content(binInfoModel))
             } catch (e: Exception) {
                 Log.e(TAG, e.message.orEmpty())
-                _state.value = SearchState.Error(e.message.orEmpty())
+                _state.postValue(SearchState.Error(e.message.orEmpty()))
             }
-            _state.value = SearchState.Initial
         }
     }
 }
