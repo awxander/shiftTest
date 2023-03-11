@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,9 +16,12 @@ import com.example.shifttest.data.BinInfoModel
 import com.example.shifttest.data.BinRepository
 import com.example.shifttest.databinding.ActivityMainBinding
 import com.example.shifttest.db.BinItem
+import com.example.shifttest.db.BinItemDatabase
 import com.example.shifttest.domain.BinInfo
 import com.example.shifttest.presentation.BinSearchViewModel
 import com.example.shifttest.presentation.SearchState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var isUserRequest = false
     private var lastBinNum: Long = 0
     private val binItemsList = ArrayList<BinItem>()
+    private val database by lazy { BinItemDatabase.getInstance(this) }
 
 
     private val viewModel: BinSearchViewModel by viewModels {
@@ -57,6 +62,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.mainRecyclerView.adapter = adapter
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        lifecycleScope.launch(Dispatchers.IO) {
+            adapter.addItemsList(ArrayList(database.binItemDao().getItems()))
+        }
     }
 
     private fun turnOffNightMode() {
@@ -99,6 +107,10 @@ class MainActivity : AppCompatActivity() {
             )
             adapter.addItem(binItem)
             binItemsList.add(binItem)
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                database.binItemDao().insertItem(binItem)
+            }
         }
     }
 

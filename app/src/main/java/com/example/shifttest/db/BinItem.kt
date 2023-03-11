@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "binItem_table")
+@Entity(tableName = "binItems_table")
 data class BinItem(
     @PrimaryKey(autoGenerate = true)
     val id : Long = 0,
