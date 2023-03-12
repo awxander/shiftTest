@@ -12,7 +12,7 @@ class BinSearchViewModel(private val repository: BinRepository) : ViewModel() {
     val state: LiveData<SearchState> = _state
 
     fun loadData(binNum: Long) {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             try {
                 val binInfoModel = repository.getByNum(binNum)
                 Log.i(javaClass.simpleName, "got bin info")

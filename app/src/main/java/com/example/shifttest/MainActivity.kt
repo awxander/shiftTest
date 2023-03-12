@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val repository = BinRepository()
     private val adapter = BinAdapter()
+    //нужна для отделения пользовательского запроса от запроса по нажатию на item, важный костыль
     private var isUserRequest = false
     private var lastBinNum: Long = 0
     private val binItemsList = ArrayList<BinItem>()
@@ -57,33 +58,49 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         adapter.setOnItemClickListener {
+
+            //нужна для отделения пользовательского запроса от запроса по нажатию на item, важный костыль
             isUserRequest = false
             viewModel.loadData(binNum = it)
         }
         binding.mainRecyclerView.adapter = adapter
-        binding.mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        binding.mainRecyclerView.layoutManager = getRecyclerViewManager()
+        addItemsFromDbToAdapter()
+    }
+
+    private fun addItemsFromDbToAdapter(){
         lifecycleScope.launch(Dispatchers.IO) {
             adapter.addItemsList(ArrayList(database.binItemDao().getItems()))
         }
     }
 
+    private fun getRecyclerViewManager() = LinearLayoutManager(this@MainActivity).apply {
+        reverseLayout = true
+    }
     private fun turnOffNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     private fun setBtnListener() {
         binding.searchBtn.setOnClickListener {
+            //нужна для отделения пользовательского запроса от запроса по нажатию на item, важный костыль
             isUserRequest = true
-            try {
-                val binNum = binding.editBin.text.toString().toLong()
-                lastBinNum = binNum
-                viewModel.loadData(binNum)
-            } catch (ex: java.lang.NumberFormatException) {
-                Log.e(TAG, ex.message.orEmpty())
-                showErrorMsg(ex.message.orEmpty())
-            }
+            trySearch()
         }
     }
+
+    private fun trySearch(){
+        try {
+            val binNum = readInput()
+            lastBinNum = binNum
+            viewModel.loadData(binNum)
+        } catch (ex: java.lang.NumberFormatException) {
+            Log.e(TAG, ex.message.orEmpty())
+            showErrorMsg(ex.message.orEmpty())
+        }
+    }
+
+    private fun readInput() =  binding.editBin.text.toString().toLong()
 
 
     private fun handleState(state: SearchState) {
