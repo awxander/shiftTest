@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">shiftTest</string>
-    <string name="bin">BIN: </string>
+    <string name="bin">BIN</string>
     <string name="error">error </string>
+    <string name="country">country </string>
+    <string name="bank">bank </string>
+    <string name="scheme">scheme </string>
+    <string name="type">type </string>
+    <string name="brand">brand </string>
+    <string name="prepaid">prepaid </string>
+    <string name="not_mentioned">not mentioned </string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 </resources>
