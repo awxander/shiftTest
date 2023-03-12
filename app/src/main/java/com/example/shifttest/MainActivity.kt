@@ -65,13 +65,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.mainRecyclerView.adapter = adapter
         binding.mainRecyclerView.layoutManager = getRecyclerViewManager()
-        addItemsFromDbToAdapter()
-    }
 
-    private fun addItemsFromDbToAdapter(){
         lifecycleScope.launch(Dispatchers.IO) {
             adapter.addItemsList(ArrayList(database.binItemDao().getItems()))
+            scrollRecyclerViewToTop()
         }
+
     }
 
     private fun getRecyclerViewManager() = LinearLayoutManager(this@MainActivity).apply {
@@ -100,6 +99,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun scrollRecyclerViewToTop(){
+        binding.mainRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+    }
+
+
     private fun readInput() =  binding.editBin.text.toString().toLong()
 
 
@@ -124,7 +128,7 @@ class MainActivity : AppCompatActivity() {
             )
             adapter.addItem(binItem)
             binItemsList.add(binItem)
-
+            scrollRecyclerViewToTop()
             lifecycleScope.launch(Dispatchers.IO) {
                 database.binItemDao().insertItem(binItem)
             }
