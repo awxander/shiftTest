@@ -1,5 +1,6 @@
 package com.example.shifttest.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,11 +52,13 @@ class BinAdapter : RecyclerView.Adapter<BinAdapter.BinHolder>() {
         holder.bind(bins[position], onItemClickListener)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addItem(binItem: BinItem){
         bins.add(binItem)
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addItemsList(bins : ArrayList<BinItem>){
         this.bins.addAll(bins)
         notifyDataSetChanged()
