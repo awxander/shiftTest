@@ -29,20 +29,43 @@ class InfoActivity : AppCompatActivity() {
 
     private fun setInfo(binInfo: BinInfo) {
         binding.apply {
-            scheme.text = "scheme: ".plus(ifNotMentioned(binInfo.scheme))
-            type.text = "type: " + ifNotMentioned(binInfo.type)
-            brand.text = "brand: " + ifNotMentioned(binInfo.brand)
-            prepaid.text = "prepaid: " + ifNotMentioned(binInfo.prepaid.toString())
-            bank.text = "bank: " + ifNotMentioned(binInfo.bankModel?.name)
-            number.text = "card number len: " + ifNotMentioned(binInfo.cardNumber?.length.toString())
-            country.text = "country: " + ifNotMentioned(binInfo.countryModel?.name)
+            tvScheme.text = binInfo.scheme ?: getString(R.string.not_mentioned)
+            tvType.text = binInfo.type ?: getString(R.string.not_mentioned)
+            tvBrand.text = binInfo.brand ?: getString(R.string.not_mentioned)
+            tvPrepaid.text = getPrepaidText(binInfo)
+            tvCountry.text = binInfo.countryModel?.name ?: getString(R.string.not_mentioned)
+            setBankInfo(binInfo)
+            setCardNumInfo(binInfo)
         }
     }
 
-    private fun ifNotMentioned(str: String?): String = when (str) {
-        "null",
-        null -> "not mentioned"
-        else -> str
+
+    private fun getPrepaidText(binInfo: BinInfo) =
+        when(binInfo.prepaid){
+            null -> getString(R.string.not_mentioned)
+            true -> getString(R.string.yes)
+            false -> getString(R.string.no)
+        }
+
+    private fun setBankInfo(binInfo: BinInfo){
+        binding.apply {
+            tvBankName.text = binInfo.bankModel?.name ?: getString(R.string.not_mentioned)
+            tvBankSite.text = binInfo.bankModel?.url ?: getString(R.string.not_mentioned)
+            tvBankPhoneNum.text = binInfo.bankModel?.phone ?: getString(R.string.not_mentioned)
+        }
+    }
+
+    private fun setCardNumInfo(binInfo: BinInfo){
+        binding.tvCardNumLen.text = if (binInfo.cardNumber?.length != null) {
+            binInfo.cardNumber?.length.toString()
+        }else{
+            getString(R.string.not_mentioned)
+        }
+        binding.tvCardNumLuhn.text = when(binInfo.cardNumber?.luhn){
+            null -> getString(R.string.not_mentioned)
+            true -> getString(R.string.yes)
+            false -> getString(R.string.no)
+        }
     }
 
 
